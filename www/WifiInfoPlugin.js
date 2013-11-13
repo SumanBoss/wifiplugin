@@ -1,4 +1,3 @@
-
 managewifi = function(success, fail) {
-		cordova.exec(success, fail, 'WifiInfoPlugin', 'managewifi', [] );
+	//	cordova.exec(success, fail, 'WifiInfoPlugin', 'managewifi', [] );
 };
