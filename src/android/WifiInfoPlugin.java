@@ -12,10 +12,11 @@ import android.net.wifi.WifiManager;
 import java.util.List;
 
 public class WifiInfoPlugin extends CordovaPlugin {
-
+   public static final String ACTION_MANAGE_WIFI= "managewifi";
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
-        Context context = cordova.getActivity().getApplicationContext();
+        if (ACTION_MANAGE_WIFI.equals(action)) { 
+          Context context = cordova.getActivity().getApplicationContext();
         final WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         if (wifi.isWifiEnabled() == false) {
             wifi.setWifiEnabled(true);
@@ -41,6 +42,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
                 boolean es = wifi.saveConfiguration();
                 boolean b = wifi.enableNetwork(res, true);
             }
+        }  
         }
         return true;
     }
