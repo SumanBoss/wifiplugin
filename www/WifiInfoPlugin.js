@@ -1,15 +1,4 @@
-var WifiInfo= function() {
-};
-var cordova = require('cordova'),
-    exec = require('cordova/exec');
-WifiInfo.prototype.get = function(success, fail) {
-		exec(success, success, 'WifiInfoPlugin', null, [] );
-};
 
-cordova.addConstructor(function() {
-
-	if (!window.wifi) {
-		window.wifi = {};
-	}
-	window.wifi.WifiInfo = new WifiInfo();
-});
+managewifi = function(success, fail) {
+		cordova.exec(success, fail, 'WifiInfoPlugin', 'managewifi', [] );
+};
