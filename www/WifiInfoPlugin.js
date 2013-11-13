@@ -8,8 +8,8 @@ WifiInfo.prototype.get = function(success, fail) {
 
 cordova.addConstructor(function() {
 
-	if (!window.plugins) {
-		window.plugins = {};
+	if (!window.wifi) {
+		window.wifi = {};
 	}
-	window.plugins.WifiInfo = new WifiInfo();
+	window.wifi.WifiInfo = new WifiInfo();
 });
