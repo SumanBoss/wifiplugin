@@ -18,7 +18,7 @@
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="Wifi">
+            <feature name="wifi">
                 <param name="android-package" value="org.apache.cordova.plugin.WifiInfoPlugin"/>
             </feature>
         </config-file>
