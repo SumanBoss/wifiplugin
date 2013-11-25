@@ -11,8 +11,8 @@
  <engines>
       <engine name="cordova" version=">=3.0.0" />
    </engines>
-    <js-module src="www/WifiInfoPlugin.js" name="WifiInfoPlugin">
-        <clobbers target="clb.wifi" />
+    <js-module src="www/WifiInfoPlugin.js" name="wifi">
+        <clobbers target="wifi" />
     </js-module>
 
     <!-- android -->
