@@ -7,7 +7,7 @@
             alert('sucess plug');
        }, function(error) {
              alert(error);
-       }, 'WifiInfoPlugin', 'managewifi', []);
+       }, 'wifi', 'managewifi', []);
     }
     module.exports = new MyOwnPlugin();
 
