@@ -18,6 +18,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
    @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
         Context context = cordova.getActivity().getApplicationContext();
+        Toast.makeText(context, "I am in", Toast.LENGTH_LONG).show();
         try {
             if (ACTION_MANAGE_WIFI.equals(action)) {
                 Toast.makeText(context, "here in action---", Toast.LENGTH_LONG).show();
