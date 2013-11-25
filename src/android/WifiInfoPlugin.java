@@ -14,7 +14,9 @@ import org.apache.cordova.CordovaPlugin;
 public class WifiInfoPlugin extends CordovaPlugin {
 
     public static final String ACTION_MANAGE_WIFI = "managewifi";
-
+ public WifiInfoPlugin(){
+        
+    }
    @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
         Context context = cordova.getActivity().getApplicationContext();
