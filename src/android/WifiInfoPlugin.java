@@ -14,11 +14,12 @@ public class WifiInfoPlugin extends CordovaPlugin {
 
     public static final String ACTION_MANAGE_WIFI = "managewifi";
 
-    @Override
+   @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
+        Context context = cordova.getActivity().getApplicationContext();
         try {
             if (ACTION_MANAGE_WIFI.equals(action)) {
-                Context context = cordova.getActivity().getApplicationContext();
+                Toast.makeText(context, "here in action---", Toast.LENGTH_LONG).show();
                 final WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                 if (wifi.isWifiEnabled() == false) {
                     wifi.setWifiEnabled(true);
@@ -46,15 +47,19 @@ public class WifiInfoPlugin extends CordovaPlugin {
                     }
                 }
                 callbackContext.success();
+                Toast.makeText(context, "Sucess", Toast.LENGTH_LONG).show();
                 return true;
             } else {
                 callbackContext.error("Invalid action");
+                Toast.makeText(context, "Invalid action", Toast.LENGTH_LONG).show();
                 return false;
             }
         } catch (Exception e) {
             System.err.println("Exception: " + e.getMessage());
+            Toast.makeText(context, "Exception", Toast.LENGTH_LONG).show();
             callbackContext.error(e.getMessage());
             return false;
         }
     }
 }
+
