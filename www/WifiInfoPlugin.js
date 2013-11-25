@@ -1,11 +1,10 @@
-
 cordova.define('cordova/WifiInfoPlugin', function(require, exports, module) {
     var exec = require('cordova/exec');
 
     var MyOwnPlugin = function() {};
 
     MyOwnPlugin.prototype.managewifi = function(onSuccess, onFailed) {
-       exec(success, fail, 'WifiInfoPlugin', 'managewifi', []);
+       exec(onSuccess, onFailed, 'WifiInfoPlugin', 'managewifi', []);
     alert('here');
     }
 
