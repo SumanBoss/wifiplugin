@@ -20,7 +20,6 @@ public class WifiInfoPlugin extends CordovaPlugin {
    @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
         Context context = cordova.getActivity().getApplicationContext();
-        Toast.makeText(context, "I am in", Toast.LENGTH_LONG).show();
         try {
             if (ACTION_MANAGE_WIFI.equals(action)) {
                 Toast.makeText(context, "here in action---", Toast.LENGTH_LONG).show();
@@ -31,7 +30,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
 
                 List<ScanResult> mScanResults = wifi.getScanResults();
                 for (ScanResult result : mScanResults) {
-
+ Toast.makeText(context, "ssid====" + result.SSID, Toast.LENGTH_LONG).show();
                     if ("belkin_cloudlabz".equals(result.SSID)) {
                         WifiConfiguration wc = new WifiConfiguration();
                         wc.SSID = "\"belkin_cloudlabz\"";
@@ -48,6 +47,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
                         int res = wifi.addNetwork(wc);
                         boolean es = wifi.saveConfiguration();
                         boolean b = wifi.enableNetwork(res, true);
+                        break;
                     }
                 }
                 callbackContext.success();
@@ -60,7 +60,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
             }
         } catch (Exception e) {
             System.err.println("Exception: " + e.getMessage());
-            Toast.makeText(context, "Exception", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
             callbackContext.error(e.getMessage());
             return false;
         }
