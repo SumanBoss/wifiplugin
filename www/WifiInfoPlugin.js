@@ -1,4 +1,3 @@
-cordova.define('cordova/plugin/WifiInfoPlugin', function(require, exports, module) {
     var exec = require('cordova/exec');
 
     var MyOwnPlugin = function() {};
@@ -11,4 +10,4 @@ cordova.define('cordova/plugin/WifiInfoPlugin', function(require, exports, modul
        }, 'WifiInfoPlugin', 'managewifi', []);
     }
     module.exports = new MyOwnPlugin();
-});
+
