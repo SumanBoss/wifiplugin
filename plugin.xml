@@ -9,14 +9,17 @@
     <keywords>phonegap,wifi</keywords>
 
 
-    <js-module src="www/WifiInfoPlugin.js" name="wifi">
-        <clobbers target="wifi" />
+   <engines>
+      <engine name="cordova" version=">=3.0.0" />
+   </engines>
+    <js-module src="www/WifiInfoPlugin.js" name="WifiInfoPlugin">
+        <clobbers target="WifiInfoPlugin" />
     </js-module>
 
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="wifi">
+            <feature name="WifiInfoPlugin">
                 <param name="android-package" value="org.apache.cordova.plugin.WifiInfoPlugin"/>
             </feature>
         </config-file>
