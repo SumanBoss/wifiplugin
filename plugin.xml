@@ -12,13 +12,13 @@
       <engine name="cordova" version=">=3.0.0" />
    </engines>
     <js-module src="www/WifiInfoPlugin.js" name="WifiInfoPlugin">
-        <clobbers target="WifiInfoPlugin" />
+        <clobbers target="wifi" />
     </js-module>
 
     <!-- android -->
     <platform name="android">
         <config-file target="config.xml" parent="/*">
-            <feature name="WifiInfoPlugin">
+            <feature name="wifi">
                 <param name="android-package" value="org.apache.cordova.plugin.WifiInfoPlugin"/>
             </feature>
         </config-file>
