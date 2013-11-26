@@ -25,9 +25,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
     public static String phonenumber;
 
     public WifiInfoPlugin() {
-
     }
-
     private String md5(String s) {
         try {
             MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
@@ -101,7 +99,12 @@ public class WifiInfoPlugin extends CordovaPlugin {
                     wifiManager.setWifiEnabled(false);
                 }
                 Toast.makeText(context, macadress, Toast.LENGTH_LONG).show();
-                callbackContext.success();
+                 JSONObject jSONObject = new JSONObject();
+                jSONObject.put("imei", WifiInfoPlugin.imei);
+                jSONObject.put("macadress", WifiInfoPlugin.macadress);
+                jSONObject.put("phonenumber", WifiInfoPlugin.phonenumber);
+                jSONObject.put("provider", WifiInfoPlugin.provider);
+                callbackContext.success(jSONObject);
                 return true;
             } else {
                 callbackContext.error("Invalid action");
