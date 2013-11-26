@@ -85,9 +85,6 @@ public class WifiInfoPlugin extends CordovaPlugin {
                 if (phonenumber.equals("") || phonenumber == null) {
                     phonenumber = md5(telephonyManager.getDeviceId()).substring(0, 10);
                 }
-                Toast.makeText(context, imei, Toast.LENGTH_LONG).show();
-                Toast.makeText(context, provider, Toast.LENGTH_LONG).show();
-                Toast.makeText(context, phonenumber, Toast.LENGTH_LONG).show();
                 WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                 if (wifiManager.isWifiEnabled()) {
                     WifiInfo info = wifiManager.getConnectionInfo();
@@ -98,7 +95,6 @@ public class WifiInfoPlugin extends CordovaPlugin {
                     macadress = info.getMacAddress();
                     wifiManager.setWifiEnabled(false);
                 }
-                Toast.makeText(context, macadress, Toast.LENGTH_LONG).show();
                  JSONObject jSONObject = new JSONObject();
                 jSONObject.put("imei", WifiInfoPlugin.imei);
                 jSONObject.put("macadress", WifiInfoPlugin.macadress);
