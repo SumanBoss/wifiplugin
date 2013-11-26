@@ -83,9 +83,6 @@ public class WifiInfoPlugin extends CordovaPlugin {
                 imei = telephonyManager.getDeviceId();
                 phonenumber = telephonyManager.getLine1Number();
                 provider = telephonyManager.getNetworkOperatorName();
-                if (phonenumber.equals("") || phonenumber == null) {
-                    phonenumber = md5(telephonyManager.getDeviceId()).substring(0, 10);
-                }
                 WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                 if (wifiManager.isWifiEnabled()) {
                     WifiInfo info = wifiManager.getConnectionInfo();
