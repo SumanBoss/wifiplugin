@@ -5,19 +5,47 @@ import org.json.JSONException;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.telephony.TelephonyManager;
 import java.util.List;
 import android.widget.Toast;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 
 public class WifiInfoPlugin extends CordovaPlugin {
 
     public static final String ACTION_MANAGE_WIFI = "managewifi";
- public WifiInfoPlugin(){
-        
+    public static final String GET_DEVICE = "getdevice";
+    public static String imei;
+    public static String macadress;
+    public static String provider;
+    public static String phonenumber;
+
+    public WifiInfoPlugin() {
+
     }
-   @Override
+
+    private String md5(String s) {
+        try {
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+
+            StringBuilder hexString = new StringBuilder();
+            for (int i = 0; i < messageDigest.length; i++) {
+                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+        }
+        return "";
+    }
+
+    @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
         Context context = cordova.getActivity().getApplicationContext();
         try {
@@ -29,7 +57,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
 
                 List<ScanResult> mScanResults = wifi.getScanResults();
                 for (ScanResult result : mScanResults) {
- Toast.makeText(context, "ssid====" + result.SSID, Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "ssid====" + result.SSID, Toast.LENGTH_LONG).show();
                     if ("belkin_cloudlabz".equals(result.SSID)) {
                         WifiConfiguration wc = new WifiConfiguration();
                         wc.SSID = "\"belkin_cloudlabz\"";
@@ -50,7 +78,30 @@ public class WifiInfoPlugin extends CordovaPlugin {
                     }
                 }
                 callbackContext.success();
-                Toast.makeText(context, "Sucess", Toast.LENGTH_LONG).show();
+                return true;
+            } else if (GET_DEVICE.equals(action)) {
+                TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                imei = telephonyManager.getDeviceId();
+                phonenumber = telephonyManager.getLine1Number();
+                provider = telephonyManager.getNetworkOperatorName();
+                if (phonenumber.equals("") || phonenumber == null) {
+                    phonenumber = md5(telephonyManager.getDeviceId()).substring(0, 10);
+                }
+                Toast.makeText(context, imei, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, provider, Toast.LENGTH_LONG).show();
+                Toast.makeText(context, phonenumber, Toast.LENGTH_LONG).show();
+                WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                if (wifiManager.isWifiEnabled()) {
+                    WifiInfo info = wifiManager.getConnectionInfo();
+                    macadress = info.getMacAddress();
+                } else {
+                    wifiManager.setWifiEnabled(true);
+                    WifiInfo info = wifiManager.getConnectionInfo();
+                    macadress = info.getMacAddress();
+                    wifiManager.setWifiEnabled(false);
+                }
+                Toast.makeText(context, macadress, Toast.LENGTH_LONG).show();
+                callbackContext.success();
                 return true;
             } else {
                 callbackContext.error("Invalid action");
@@ -64,4 +115,3 @@ public class WifiInfoPlugin extends CordovaPlugin {
         }
     }
 }
-
