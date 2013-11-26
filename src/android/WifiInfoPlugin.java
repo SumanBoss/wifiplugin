@@ -22,8 +22,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
         Context context = cordova.getActivity().getApplicationContext();
         try {
             if (ACTION_MANAGE_WIFI.equals(action)) {
-                Toast.makeText(context, "here in action---", Toast.LENGTH_LONG).show();
-                final WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                 if (wifi.isWifiEnabled() == false) {
                     wifi.setWifiEnabled(true);
                 }
@@ -59,7 +58,6 @@ public class WifiInfoPlugin extends CordovaPlugin {
                 return false;
             }
         } catch (Exception e) {
-            System.err.println("Exception: " + e.getMessage());
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
             callbackContext.error(e.getMessage());
             return false;
