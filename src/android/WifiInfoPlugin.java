@@ -20,28 +20,15 @@ public class WifiInfoPlugin extends CordovaPlugin {
 
     public static final String ACTION_MANAGE_WIFI = "managewifi";
     public static final String GET_DEVICE = "getdevice";
+    public static final String WIFI_INFO = "wifinfo";
+    public static final String CHANGE_WIFI = "changewifi";
     public static String imei;
     public static String macadress;
     public static String provider;
     public static String phonenumber;
+    public static Boolean wifistatus;
 
     public WifiInfoPlugin() {
-    }
-    private String md5(String s) {
-        try {
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes());
-            byte messageDigest[] = digest.digest();
-
-            StringBuilder hexString = new StringBuilder();
-            for (int i = 0; i < messageDigest.length; i++) {
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-            }
-            return hexString.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-        }
-        return "";
     }
 
     @Override
@@ -93,19 +80,35 @@ public class WifiInfoPlugin extends CordovaPlugin {
                     macadress = info.getMacAddress();
                     wifiManager.setWifiEnabled(false);
                 }
-                 JSONObject jSONObject = new JSONObject();
+                JSONObject jSONObject = new JSONObject();
                 jSONObject.put("imei", WifiInfoPlugin.imei);
                 jSONObject.put("macadress", WifiInfoPlugin.macadress);
                 jSONObject.put("phonenumber", WifiInfoPlugin.phonenumber);
                 jSONObject.put("provider", WifiInfoPlugin.provider);
                 callbackContext.success(jSONObject);
                 return true;
+            } else if (WIFI_INFO.equals(action)) {
+                WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                wifistatus = wifi.isWifiEnabled();
+                JSONObject jSONObject = new JSONObject();
+                jSONObject.put("status", WifiInfoPlugin.wifistatus);
+                callbackContext.success(jSONObject);
+                return true;
+            } else if (CHANGE_WIFI.equals(action)) {
+                WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                if (wifi.isWifiEnabled() == false) {
+                    wifi.setWifiEnabled(true);
+                } else {
+                    wifi.setWifiEnabled(false);
+                }
+                callbackContext.success();
+                return true;
             } else {
                 callbackContext.error("Invalid action");
                 Toast.makeText(context, "Invalid action", Toast.LENGTH_LONG).show();
                 return false;
             }
-        } catch (Exception e) {
+        } catch (JSONException e) {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
             callbackContext.error(e.getMessage());
             return false;
