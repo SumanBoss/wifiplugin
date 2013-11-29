@@ -24,7 +24,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
     public static String macadress;
     public static String provider;
     public static String phonenumber;
-    public static Boolean wifistatus;
+    public static int wifistatus;
 
     public WifiInfoPlugin() {
     }
@@ -95,6 +95,11 @@ public class WifiInfoPlugin extends CordovaPlugin {
                 return true;
             } else if (WIFI_INFO.equals(action)) {
                 WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                if (wifi.isWifiEnabled() == false) {
+                    wifistatus=0;
+                } else {
+                   wifistatus=1;
+                }
                 wifistatus = wifi.isWifiEnabled();
                 JSONObject jSONObject = new JSONObject();
                 jSONObject.put("status", WifiInfoPlugin.wifistatus);
