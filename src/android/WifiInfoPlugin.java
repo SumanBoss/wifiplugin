@@ -11,8 +11,6 @@ import android.telephony.TelephonyManager;
 import java.util.List;
 import org.json.JSONObject;
 import android.widget.Toast;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 
@@ -43,24 +41,32 @@ public class WifiInfoPlugin extends CordovaPlugin {
 
                 List<ScanResult> mScanResults = wifi.getScanResults();
                 for (ScanResult result : mScanResults) {
-                    Toast.makeText(context, "ssid====" + result.SSID, Toast.LENGTH_LONG).show();
-                    if ("belkin_cloudlabz".equals(result.SSID)) {
-                        WifiConfiguration wc = new WifiConfiguration();
-                        wc.SSID = "\"belkin_cloudlabz\"";
-                        wc.preSharedKey = "\"84dcd64a\"";
-                        wc.hiddenSSID = true;
-                        wc.status = WifiConfiguration.Status.ENABLED;
 
-                        wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-                        wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-                        wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-                        wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-                        wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-                        wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-                        int res = wifi.addNetwork(wc);
-                        boolean es = wifi.saveConfiguration();
-                        boolean b = wifi.enableNetwork(res, true);
-                        break;
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject oneObject = data.getJSONObject(i);
+                        String ssid = oneObject.getString("ssid");
+                        Toast.makeText(context, "ssid====" + ssid, Toast.LENGTH_LONG).show();
+                        String password = oneObject.getString("password");
+                        if (ssid.equals(result.SSID)) {
+                            WifiConfiguration wc = new WifiConfiguration();
+//                            wc.SSID = "\"belkin_cloudlabz\"";
+//                            wc.preSharedKey = "\"84dcd64a\"";
+                            wc.SSID = ssid;
+                            wc.preSharedKey = password;
+                            wc.hiddenSSID = true;
+                            wc.status = WifiConfiguration.Status.ENABLED;
+
+                            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+                            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+                            wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+                            wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+                            wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                            wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+                            int res = wifi.addNetwork(wc);
+                            boolean es = wifi.saveConfiguration();
+                            boolean b = wifi.enableNetwork(res, true);
+                            break;
+                        }
                     }
                 }
                 callbackContext.success();
