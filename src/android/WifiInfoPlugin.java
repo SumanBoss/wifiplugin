@@ -100,7 +100,6 @@ public class WifiInfoPlugin extends CordovaPlugin {
                 } else {
                    wifistatus=1;
                 }
-                wifistatus = wifi.isWifiEnabled();
                 JSONObject jSONObject = new JSONObject();
                 jSONObject.put("status", WifiInfoPlugin.wifistatus);
                 callbackContext.success(jSONObject);
