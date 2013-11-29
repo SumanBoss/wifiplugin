@@ -12,5 +12,8 @@
       MyOwnPlugin.prototype.info = function(successCallback, errorCallback) {
        exec(successCallback, errorCallback, 'wifi', 'wifinfo', []);
     };
+     MyOwnPlugin.prototype.changewifi = function(successCallback, errorCallback) {
+       exec(successCallback, errorCallback, 'wifi', 'changewifi', []);
+    };
     module.exports = new MyOwnPlugin();
 
