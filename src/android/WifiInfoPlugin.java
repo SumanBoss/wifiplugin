@@ -41,7 +41,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
 
                 List<ScanResult> mScanResults = wifi.getScanResults();
                 for (ScanResult result : mScanResults) {
-
+ Toast.makeText(context, "sdsds====" + data.length(), Toast.LENGTH_LONG).show();
                     for (int i = 0; i < data.length(); i++) {
                         JSONObject oneObject = data.getJSONObject(i);
                         String ssid = oneObject.getString("ssid");
