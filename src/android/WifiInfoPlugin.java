@@ -43,7 +43,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
  //                    Toast.makeText(context, "sdsds====" + data.getJSONObject(0), Toast.LENGTH_LONG).show();
                     JSONObject oneObject = data.getJSONObject(0);
                     String ssid = oneObject.getString("ssid");
-                    Toast.makeText(context, "ssid====" + ssid, Toast.LENGTH_LONG).show();
+                    // Toast.makeText(context, "ssid====" + ssid, Toast.LENGTH_LONG).show();
                     String password = oneObject.getString("password");;
                         if (ssid.equals(result.SSID)) {
                             WifiConfiguration wc = new WifiConfiguration();
