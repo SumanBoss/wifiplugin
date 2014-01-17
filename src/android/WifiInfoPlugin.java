@@ -38,15 +38,13 @@ public class WifiInfoPlugin extends CordovaPlugin {
                 if (wifi.isWifiEnabled() == false) {
                     wifi.setWifiEnabled(true);
                 }
-String ssid = (String)data.get(0);
-                    Toast.makeText(context, "ssid====" + ssid, Toast.LENGTH_LONG).show();
                 List<ScanResult> mScanResults = wifi.getScanResults();
                 for (ScanResult result : mScanResults) {
  //                    Toast.makeText(context, "sdsds====" + data.getJSONObject(0), Toast.LENGTH_LONG).show();
-//                    JSONObject oneObject = data.getJSONObject(0);
-                    // String ssid = (String)data.get(0);
-                    // Toast.makeText(context, "ssid====" + ssid, Toast.LENGTH_LONG).show();
-                    String password = (String)data.get(1);
+                    JSONObject oneObject = data.getJSONObject(0);
+                    String ssid = oneObject.getString("ssid");
+                    Toast.makeText(context, "ssid====" + ssid, Toast.LENGTH_LONG).show();
+                    String password = oneObject.getString("password");;
                         if (ssid.equals(result.SSID)) {
                             WifiConfiguration wc = new WifiConfiguration();
 //                            wc.SSID = "\"belkin_cloudlabz\"";
