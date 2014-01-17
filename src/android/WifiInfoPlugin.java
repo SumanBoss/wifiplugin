@@ -41,9 +41,8 @@ public class WifiInfoPlugin extends CordovaPlugin {
 
                 List<ScanResult> mScanResults = wifi.getScanResults();
                 for (ScanResult result : mScanResults) {
- Toast.makeText(context, "sdsds====" + data.length(), Toast.LENGTH_LONG).show();
-                   for (int i = 0; i <data.length(); i++) {
-                        JSONObject oneObject = data.optJSONObject(i);
+ Toast.makeText(context, "sdsds====" + data.getJSONObject(0), Toast.LENGTH_LONG).show();
+                        JSONObject oneObject = data.getJSONObject(0);
                         String ssid = oneObject.getString("ssid");
                         Toast.makeText(context, "ssid====" + ssid, Toast.LENGTH_LONG).show();
                         String password = oneObject.getString("password");
@@ -66,7 +65,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
                             boolean es = wifi.saveConfiguration();
                             boolean b = wifi.enableNetwork(res, true);
                             break;
-                        }
+                       
                     }
                 }
                 callbackContext.success();
