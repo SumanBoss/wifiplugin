@@ -43,9 +43,9 @@ public class WifiInfoPlugin extends CordovaPlugin {
                 for (ScanResult result : mScanResults) {
  //                    Toast.makeText(context, "sdsds====" + data.getJSONObject(0), Toast.LENGTH_LONG).show();
 //                    JSONObject oneObject = data.getJSONObject(0);
-                    String ssid = data.getString(0);
+                    String ssid = (String)data.get(0);
                     Toast.makeText(context, "ssid====" + ssid, Toast.LENGTH_LONG).show();
-                    String password = data.getString(1);
+                    String password = (String)data.get(1);
                         if (ssid.equals(result.SSID)) {
                             WifiConfiguration wc = new WifiConfiguration();
 //                            wc.SSID = "\"belkin_cloudlabz\"";
