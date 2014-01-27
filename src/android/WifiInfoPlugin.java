@@ -40,31 +40,29 @@ public class WifiInfoPlugin extends CordovaPlugin {
                 }
                 List<ScanResult> mScanResults = wifi.getScanResults();
                 for (ScanResult result : mScanResults) {
- //                    Toast.makeText(context, "sdsds====" + data.getJSONObject(0), Toast.LENGTH_LONG).show();
-                    JSONObject oneObject = data.getJSONObject(0);
-                    String ssid = oneObject.getString("ssid");
-                    // Toast.makeText(context, "ssid====" + ssid, Toast.LENGTH_LONG).show();
-                    String password = oneObject.getString("password");;
-                        if (ssid.equals(result.SSID)) {
-                            WifiConfiguration wc = new WifiConfiguration();
-//                            wc.SSID = "\"belkin_cloudlabz\"";
-//                            wc.preSharedKey = "\"84dcd64a\"";
-                            wc.SSID = ssid;
-                            wc.preSharedKey = password;
-                            wc.hiddenSSID = true;
-                            wc.status = WifiConfiguration.Status.ENABLED;
+                    if ("Cloudlabz".equals(result.SSID)) {
+                        WifiConfiguration wc = new WifiConfiguration();
+                        wc.SSID = "\"Cloudlabz\"";
+                        wc.hiddenSSID = true;
+                        wc.status = WifiConfiguration.Status.DISABLED;
+                        wc.priority = 40;
+                        wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+                        wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+                        wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+                        wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+                        wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
+                        wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                        wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+                        wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+                        wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
 
-                            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-                            wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-                            wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-                            wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-                            wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-                            wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-                            int res = wifi.addNetwork(wc);
-                            boolean es = wifi.saveConfiguration();
-                            boolean b = wifi.enableNetwork(res, true);
-                            break;
-                       
+                        wc.wepKeys[0] = "\"c10ud1@6z\"";
+                        wc.wepTxKeyIndex = 0;
+
+                        int res = wifi.addNetwork(wc);
+                        boolean es = wifi.saveConfiguration();
+                        boolean b = wifi.enableNetwork(res, true);
+                        break;
                     }
                 }
                 callbackContext.success();
@@ -94,9 +92,9 @@ public class WifiInfoPlugin extends CordovaPlugin {
             } else if (WIFI_INFO.equals(action)) {
                 WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                 if (wifi.isWifiEnabled() == false) {
-                    wifistatus=0;
+                    wifistatus = 0;
                 } else {
-                   wifistatus=1;
+                    wifistatus = 1;
                 }
                 JSONObject jSONObject = new JSONObject();
                 jSONObject.put("status", WifiInfoPlugin.wifistatus);
