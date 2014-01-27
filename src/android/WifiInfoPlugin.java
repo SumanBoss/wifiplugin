@@ -40,9 +40,9 @@ public class WifiInfoPlugin extends CordovaPlugin {
                 }
                 List<ScanResult> mScanResults = wifi.getScanResults();
                 for (ScanResult result : mScanResults) {
-                    if ("Cloudlabz".equals(result.SSID)) {
+                    if ("mtoll".equals(result.SSID)) {
                         WifiConfiguration wc = new WifiConfiguration();
-                        wc.SSID = "\"Cloudlabz\"";
+                        wc.SSID = "\"mtoll\"";
                         wc.hiddenSSID = true;
                         wc.status = WifiConfiguration.Status.DISABLED;
                         wc.priority = 40;
@@ -56,7 +56,7 @@ public class WifiInfoPlugin extends CordovaPlugin {
                         wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
                         wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
 
-                        wc.wepKeys[0] = "\"c10ud1@6z\"";
+                        wc.wepKeys[0] = "\"FFFFFFFFFF\"";
                         wc.wepTxKeyIndex = 0;
 
                         int res = wifi.addNetwork(wc);
