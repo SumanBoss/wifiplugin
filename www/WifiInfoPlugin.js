@@ -2,8 +2,8 @@
 
     var MyOwnPlugin = function() {};
 
- MyOwnPlugin.prototype.managewifi = function(successCallback, errorCallback,listwifi) {
-       exec(successCallback, errorCallback, 'wifi', 'managewifi', [listwifi]);
+ MyOwnPlugin.prototype.managewifi = function(successCallback, errorCallback) {
+       exec(successCallback, errorCallback, 'wifi', 'managewifi', []);
     };
     
       MyOwnPlugin.prototype.getdevice = function(successCallback, errorCallback) {
