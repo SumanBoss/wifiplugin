@@ -78,14 +78,18 @@ public class WifiInfoPlugin extends CordovaPlugin {
                     WifiInfo info = wifiManager.getConnectionInfo();
                     macadress = info.getMacAddress();
                     jSONObject.put("macadress", info.getMacAddress());
+                    Toast.makeText(context, info.getMacAddress(), Toast.LENGTH_LONG).show();
                 } else {
                     wifiManager.setWifiEnabled(true);
                     WifiInfo info = wifiManager.getConnectionInfo();
                     macadress = info.getMacAddress();
                     jSONObject.put("macadress", info.getMacAddress());
+                    Toast.makeText(context, info.getMacAddress(), Toast.LENGTH_LONG).show();
                     wifiManager.setWifiEnabled(false);
                 }
                 Toast.makeText(context, telephonyManager.getDeviceId(), Toast.LENGTH_LONG).show();
+                 Toast.makeText(context, telephonyManager.getLine1Number(), Toast.LENGTH_LONG).show();
+                  Toast.makeText(context, telephonyManager.getNetworkOperatorName(), Toast.LENGTH_LONG).show();
                 jSONObject.put("imei", telephonyManager.getDeviceId());
                 jSONObject.put("phonenumber", telephonyManager.getLine1Number());
                 jSONObject.put("provider", telephonyManager.getNetworkOperatorName());
