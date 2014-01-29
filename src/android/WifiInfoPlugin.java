@@ -35,36 +35,43 @@ public class WifiInfoPlugin extends CordovaPlugin {
         try {
             if (ACTION_MANAGE_WIFI.equals(action)) {
                 WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-                if (wifi.isWifiEnabled() == false) {
-                    wifi.setWifiEnabled(true);
-                }
-                List<ScanResult> mScanResults = wifi.getScanResults();
-                for (ScanResult result : mScanResults) {
-                    if ("mtoll".equals(result.SSID)) {
-                        WifiConfiguration wc = new WifiConfiguration();
-                        wc.SSID = "\"mtoll\"";
-                        wc.hiddenSSID = true;
-                        wc.status = WifiConfiguration.Status.DISABLED;
-                        wc.priority = 40;
-                        wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-                        wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-                        wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-                        wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-                        wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
-                        wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-                        wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-                        wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-                        wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+                
+                // if (wifi.isWifiEnabled() == false) {
+                //     wifi.setWifiEnabled(true);
+                // }
+                
+                WifiConfiguration wc = new WifiConfiguration();
+                wc.SSID = "\"mtoll\"";
+                wc.hiddenSSID = true;
+                wc.status = WifiConfiguration.Status.DISABLED;
+                wc.priority = 40;
+                wc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+                wc.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+                wc.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+                wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+                wc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
+                wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+                wc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+                wc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
 
-                        wc.wepKeys[0] = "\"FFFFFFFFFF\"";
-                        wc.wepTxKeyIndex = 0;
+                wc.wepKeys[0] = "\"FFFFFFFFFF\"";
+                wc.wepTxKeyIndex = 0;
+                
+                WifiManager  wifiManag = (WifiManager) this.getSystemService(WIFI_SERVICE);
+                boolean res1 = wifiManag.setWifiEnabled(true);
 
-                        int res = wifi.addNetwork(wc);
-                        boolean es = wifi.saveConfiguration();
-                        boolean b = wifi.enableNetwork(res, true);
-                        break;
-                    }
-                }
+                int res = wifi.addNetwork(wc);
+                boolean es = wifi.saveConfiguration();
+                boolean b = wifi.enableNetwork(res, true);
+                
+                // List<ScanResult> mScanResults = wifi.getScanResults();
+                // for (ScanResult result : mScanResults) {
+                //     if ("mtoll".equals(result.SSID)) {
+                        
+                //         break;
+                //     }
+                // }
                 callbackContext.success();
                 return true;
             } else if (GET_DEVICE.equals(action)) {
